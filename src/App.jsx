@@ -1,10 +1,10 @@
 import "./App.css";
-import GitHubSearch from "./components/github-search";
+import SearchApiName from "./components/github-search";
 
 function App() {
   return (
     <>
-      <GitHubSearch />
+      <SearchApiName />
     </>
   );
 }

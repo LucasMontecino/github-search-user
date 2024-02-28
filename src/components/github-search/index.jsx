@@ -1,63 +1,54 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Card from "./card";
+import "./github.css";
 
-export default function GitHubSearch() {
-  const [user, setUser] = useState("lucasmontecino");
-  const [input, setInput] = useState("");
+export default function SearchApiName() {
+  const [name, setName] = useState("cute squirrel");
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  function handleChange(e) {
-    setInput(e.target.value);
-    setUser(e.target.value);
-  }
-
   function handleSearch() {
-    fetchUserData();
-
-    setInput("");
+    fetchDataName();
   }
 
-  async function fetchUserData() {
+  async function fetchDataName() {
     try {
       setLoading(true);
-
-      const response = await fetch(`https://api.github.com/users/${user}`);
+      const response = await fetch(`http://localhost:3001/api/images/${name}`);
       const data = await response.json();
 
+      console.log(data);
       if (data) {
-        setUser(data);
+        setData(data);
         setLoading(false);
+        setName("");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    fetchUserData();
+    fetchDataName();
   }, []);
 
-  if (loading) {
-    return <p>Loading, Please wait !</p>;
-  }
-
-  console.log(user);
+  if (loading) return <p>Please wait for the data !</p>;
 
   return (
-    <div>
-      <div>
+    <div className="main-container">
+      <div className="input-container">
         <input
           type="text"
-          placeholder="Search..."
-          name="user-name-search"
-          value={input}
-          onChange={handleChange}
+          placeholder="enter a name..."
+          name="searching"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleSearch}>Search...</button>
       </div>
-      {user && <Card user={user} />}
+
+      {data && <Card cardData={data} />}
     </div>
   );
 }
