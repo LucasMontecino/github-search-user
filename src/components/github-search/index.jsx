@@ -11,6 +11,12 @@ export default function SearchApiName() {
     fetchDataName();
   }
 
+  function handleKeySearch(e) {
+    if (e.key === "Enter") {
+      fetchDataName();
+    }
+  }
+
   async function fetchDataName() {
     try {
       setLoading(true);
@@ -44,6 +50,7 @@ export default function SearchApiName() {
           name="searching"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={handleKeySearch}
         />
         <button onClick={handleSearch}>Search...</button>
       </div>
