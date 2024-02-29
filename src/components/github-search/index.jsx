@@ -23,7 +23,6 @@ export default function SearchApiName() {
       const response = await fetch(`http://localhost:3001/api/images/${name}`);
       const data = await response.json();
 
-      console.log(data);
       if (data) {
         setData(data);
         setLoading(false);
